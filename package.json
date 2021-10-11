@@ -1,0 +1,20 @@
+{
+  "name": "electron-canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "Jaime",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^15.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "dependencies": {
+    "socket.io": "^4.2.0"
+  }
+}

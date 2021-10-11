@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Electron Canvas</title>
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <canvas id="canvas" class="canvas"></canvas>
+  <div class="menu">
+    <div class="menu-colors">
+      <div>
+        <span>Coche</span>
+        <button id="menu-button-car" class="menu-button">
+          <div class="menu-button-color"></div>
+        </button>
+      </div>
+      <div>
+        <span>Obstaculo</span>
+        <button id="menu-button-obstacle" class="menu-button">
+          <div class="menu-button-color"></div>
+        </button>
+      </div>
+      <br>
+      <div>
+        <span>Meta</span>
+        <button id="menu-button-goal" class="menu-button">
+          <div class="menu-button-color"></div>
+        </button>
+      </div>
+      <div>
+        <span>Camino</span>
+        <button id="menu-button-path" class="menu-button">
+          <div class="menu-button-color"></div>
+        </button>
+      </div>
+    </div>
+    <div class="menu-settings">
+      <button class="menu-settings-button">&#x25B6;</button>
+      <button class="menu-settings-button">&#x23F8;</button>
+    </div>
+  </div>
+  <script type="module" src="./renderer.js"></script>
+</body>
+
+</html>

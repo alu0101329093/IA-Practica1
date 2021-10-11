@@ -1,0 +1,32 @@
+.canvas {
+  border: 1px solid #000;
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 80%;
+}
+
+.menu-button {
+  width: 60px;
+  height: 20px;
+}
+
+.menu-button-color {
+  width: 75%;
+  height: 75%;
+  display: block;
+  padding: 0;
+  margin: auto;
+}
+
+.menu {
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.menu-settings-button {
+  margin-left: 20px;
+  margin-right: 20px;
+}
