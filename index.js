@@ -4,6 +4,7 @@ const path = require('path');
 const {Server} = require('socket.io');
 /** @type{Server} */
 const io = require('socket.io')(3000);
+const {spawn} = require('child_process');
 
 /** @type {BrowserWindow} */
 let mainWindow;
@@ -35,6 +36,7 @@ app.whenReady().then(()=> {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
+  const child = spawn('matrix_processor\\bin\\main.exe', [], {shell: false});
 });
 
 io.on('connection', (socket) => {
