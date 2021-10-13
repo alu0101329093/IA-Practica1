@@ -1,3 +1,7 @@
+body {
+  font-family: sans-serif;
+}
+
 .canvas {
   border: 1px solid #000;
   padding: 0;
@@ -36,6 +40,9 @@
   flex-wrap: wrap;
   align-items: center;
   flex-direction: column;
+  margin: 5px;
+  border: 2px solid black;
+  padding: 5px;
 }
 
 .menu-colors-div {
@@ -47,4 +54,16 @@
   display: flex;
   flex-flow: column;
   align-items: center;
+  margin: 5px;
+}
+
+.menu-settings {
+  margin: 5px;
+  border: 2px solid black;
+  padding: 5px;
+}
+
+h2 {
+  margin-block: 0em;
+  text-align: center;
 }

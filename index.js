@@ -36,7 +36,7 @@ app.whenReady().then(()=> {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
-  const child = spawn('matrix_processor\\bin\\main.exe', [], {shell: false});
+  const child = spawn('matrix_processor\\bin\\main.exe');
 });
 
 io.on('connection', (socket) => {
