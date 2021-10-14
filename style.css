@@ -89,3 +89,11 @@ h2 {
 .menu-play-button:hover {
   border-color: transparent transparent transparent #404040;
 }
+
+.menu-play-button-border {
+  padding: 2px;
+  width: 30px;
+  height: 30px;
+  border: 3px solid black;
+  border-radius: 8px;
+}
