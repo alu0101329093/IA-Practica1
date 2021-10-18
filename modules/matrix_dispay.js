@@ -18,9 +18,15 @@ export class MatrixDisplay {
     /** @type {Array.<Array>} */
     this.matrix = Array.from(Array(width),
         () => new Array(height).fill('#000000'));
-    this.context.canvas.width = width * tileWidth;
-    this.context.canvas.height = height * tileHeight;
     this.colors = ['#000000', '#ffffff', '#ff0000', '#adff2f', '#0000ff'];
+    if (context.canvas.width > width * tileWidth) {
+      this.startingX = (context.canvas.width - width * tileWidth) / 2;
+      console.log(this.startingX);
+    }
+    if (context.canvas.height > height * tileHeight) {
+      this.startingY = (context.canvas.height * tileHeight - height) / 2;
+      console.log(this.startingY);
+    }
   }
 
   // eslint-disable-next-line require-jsdoc
@@ -29,8 +35,9 @@ export class MatrixDisplay {
     for (let i = 0; i < this.width; i++) {
       for (let j = 0; j < this.height; j++) {
         this.context.fillStyle = this.matrix[i][j];
-        this.context.fillRect(i * this.tileWidth, j * this.tileHeight,
-            this.tileWidth, this.tileHeight);
+        this.context.fillRect((this.startingX + i) * this.tileWidth,
+            (this.startingY + j) * this.tileHeight, this.tileWidth,
+            this.tileHeight);
       }
     }
   }

@@ -1,14 +1,17 @@
 body {
   font-family: sans-serif;
-  background-color: #fff;
+  background-color: #ffffff;
 }
 
 .canvas {
-  border: 1px solid #000;
+  border: 5px solid #000000;
+  border-radius: 10px;
   padding: 0;
   margin: auto;
   display: block;
-  width: 80%;
+  /* width: 70%; */
+  /* height: 50%; */
+  /* box-sizing: content-box; */
 }
 
 .menu-button {
@@ -72,9 +75,9 @@ h2 {
 .menu-play-button {
   box-sizing: border-box;
   width: 0;
-  height: 30px;
+  height: 25px;
   border-style: solid;
-  border-width: 15px 0 15px 30px;
+  border-width: 12.5px 0 12.5px 25px;
   border-color: transparent transparent transparent #202020;
   cursor: pointer;
   will-change: border-width;
@@ -83,7 +86,7 @@ h2 {
 
 .menu-play-button.pause {
   border-style: double;
-  border-width: 0px 0px 0px 30px;
+  border-width: 0px 0px 0px 25px;
 }
 
 .menu-play-button:hover {
@@ -92,8 +95,14 @@ h2 {
 
 .menu-play-button-border {
   padding: 2px;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border: 3px solid black;
   border-radius: 8px;
+}
+
+h3 {
+  margin-block: 0;
+  font-weight: normal;
+  font-size: 1em;
 }
