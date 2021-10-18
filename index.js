@@ -44,11 +44,18 @@ io.on('connection', (socket) => {
   socket.on('receiveMatrix', (msg) => {
     mainWindow.webContents.send('receiveMatrix', JSON.parse(msg)[0]);
   });
+
   ipcMain.on('stop', () => {
+    socket.emit('stop');
+  });
+
+  app.on('before-quit', () => {
     socket.emit('stop');
   });
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') app.quit();
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });

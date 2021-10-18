@@ -19,14 +19,7 @@ export class MatrixDisplay {
     this.matrix = Array.from(Array(width),
         () => new Array(height).fill('#000000'));
     this.colors = ['#000000', '#ffffff', '#ff0000', '#adff2f', '#0000ff'];
-    if (context.canvas.width > width * tileWidth) {
-      this.startingX = (context.canvas.width - width * tileWidth) / 2;
-      console.log(this.startingX);
-    }
-    if (context.canvas.height > height * tileHeight) {
-      this.startingY = (context.canvas.height * tileHeight - height) / 2;
-      console.log(this.startingY);
-    }
+    this.setStartingPoints();
   }
 
   // eslint-disable-next-line require-jsdoc
@@ -35,8 +28,8 @@ export class MatrixDisplay {
     for (let i = 0; i < this.width; i++) {
       for (let j = 0; j < this.height; j++) {
         this.context.fillStyle = this.matrix[i][j];
-        this.context.fillRect((this.startingX + i) * this.tileWidth,
-            (this.startingY + j) * this.tileHeight, this.tileWidth,
+        this.context.fillRect(this.startingX + i * this.tileWidth,
+            this.startingY + j * this.tileHeight, this.tileWidth,
             this.tileHeight);
       }
     }
@@ -62,5 +55,22 @@ export class MatrixDisplay {
   // eslint-disable-next-line require-jsdoc
   clear() {
     this.context.clearRect(0, 0, this.width, this.height);
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  setStartingPoints() {
+    if (this.context.canvas.width > this.width * this.tileWidth) {
+      this.startingX =
+        Math.round(
+            (this.context.canvas.width - this.width * this.tileWidth) / 2);
+    } else {
+      this.startingX = 0;
+    }
+    if (this.context.canvas.height > this.height * this.tileHeight) {
+      this.startingY = Math.round(
+          (this.context.canvas.height - this.height * this.tileHeight) / 2);
+    } else {
+      this.startingY = 0;
+    }
   }
 }

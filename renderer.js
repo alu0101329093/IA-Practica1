@@ -24,10 +24,12 @@ menuPlayButton.addEventListener('click', () => {
 
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById('canvas');
-console.log(window.innerHeight);
-canvas.height = window.innerHeight/1.5;
-canvas.width = window.innerWidth/1.3;
-const prueba = new MatrixDisplay(canvas.getContext('2d'), 100, 100, 5, 5);
+canvas.height = Math.floor(window.innerHeight/1.5);
+canvas.width = Math.floor(window.innerWidth/1.3);
+
+const displayer = new MatrixDisplay(canvas.getContext('2d'), 100, 100, 4, 4);
+const Mode = {NONE: 0, DRAW: 1, DRAG: 2};
+const mode = Mode.NONE;
 
 document.addEventListener('keyup', (key) => {
   if (key.code == 'Space') {
@@ -37,14 +39,33 @@ document.addEventListener('keyup', (key) => {
   }
 });
 
-prueba.display();
+window.addEventListener('resize', () => {
+  canvas.height = Math.floor(window.innerHeight/1.5);
+  canvas.width = Math.floor(window.innerWidth/1.3);
+  displayer.setStartingPoints();
+  displayer.display();
+});
+
+canvas.addEventListener('mousedown', (event) => {
+  switch (mode) {
+    case Mode.DRAW:
+      break;
+    case Mode.DRAG:
+      break;
+    default:
+  }
+});
+
+window.addEventListener('mouseup', () => {});
+
+displayer.display();
 
 window.api.receive('receiveMatrix',
     (/** @type {Array<Array>} */ matrix) => {
-      prueba.matrix = matrix.map((item) => {
+      displayer.matrix = matrix.map((item) => {
         return item.map((value) => {
-          return prueba.colors[value];
+          return displayer.colors[value];
         });
       });
-      prueba.display();
+      displayer.display();
     });
