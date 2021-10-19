@@ -40,8 +40,7 @@ app.whenReady().then(()=> {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
   if (process.platform === 'win32') {
-    child = spawn('matrix_processor\\bin\\main.exe', [],
-        {detached: true, shell: true});
+    child = spawn('matrix_processor\\bin\\main.exe');
   } else {
     child = spawn('matrix_processor/bin/main');
   }
