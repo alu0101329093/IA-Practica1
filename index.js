@@ -8,6 +8,7 @@ const {spawn} = require('child_process');
 
 /** @type {BrowserWindow} */
 let mainWindow;
+let child;
 
 /**
  * Create a new window
@@ -31,12 +32,22 @@ function createWindow() {
   return window;
 }
 
+let stop = false;
+
 app.whenReady().then(()=> {
   mainWindow = createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
-  const child = spawn('matrix_processor\\bin\\main.exe');
+  child = spawn('matrix_processor\\bin\\main.exe');
+  child.stdout.on('data', (msg) => {
+    console.log(msg.toString());
+  });
+  child.on('close', () => {
+    setTimeout(()=> {
+      stop = true;
+    }, 2000);
+  });
 });
 
 io.on('connection', (socket) => {
@@ -49,8 +60,10 @@ io.on('connection', (socket) => {
     socket.emit('stop');
   });
 
-  app.on('before-quit', () => {
+  process.on('beforeExit', (event) => {
+    event.preventDefault();
     socket.emit('stop');
+    while (!stop) continue;
   });
 });
 

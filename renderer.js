@@ -1,18 +1,18 @@
-import {MatrixDisplay} from './modules/matrix_dispay.js';
+import {MatrixDisplay, Objects} from './modules/matrix_dispay.js';
 
-const menuButtonCar = document.getElementById('menu-button-car');
-const menuButtonRoad = document.getElementById('menu-button-road');
 const menuButtonObstacle = document.getElementById('menu-button-obstacle');
+const menuButtonRoad = document.getElementById('menu-button-road');
+const menuButtonCar = document.getElementById('menu-button-car');
 const menuButtonGoal = document.getElementById('menu-button-goal');
 const menuButtonPath = document.getElementById('menu-button-path');
 const menuPlayButton = document.getElementById('menu-play-button');
 
-menuButtonCar.getElementsByClassName('menu-button-color')[0].style.
-    backgroundColor = 'red';
-menuButtonRoad.getElementsByClassName('menu-button-color')[0].style.
-    backgroundColor = 'white';
 menuButtonObstacle.getElementsByClassName('menu-button-color')[0].style.
     backgroundColor = 'black';
+menuButtonRoad.getElementsByClassName('menu-button-color')[0].style.
+    backgroundColor = 'white';
+menuButtonCar.getElementsByClassName('menu-button-color')[0].style.
+    backgroundColor = 'red';
 menuButtonGoal.getElementsByClassName('menu-button-color')[0].style.
     backgroundColor = 'greenyellow';
 menuButtonPath.getElementsByClassName('menu-button-color')[0].style.
@@ -27,9 +27,12 @@ const canvas = document.getElementById('canvas');
 canvas.height = Math.floor(window.innerHeight/1.5);
 canvas.width = Math.floor(window.innerWidth/1.3);
 
-const displayer = new MatrixDisplay(canvas.getContext('2d'), 100, 100, 4, 4);
+const displayer = new MatrixDisplay(canvas.getContext('2d'), 50, 50, 5, 5);
 const Mode = {NONE: 0, DRAW: 1, DRAG: 2};
 const mode = Mode.NONE;
+let clickingCanvas = false;
+const objectSelected = Objects.ROAD;
+
 
 document.addEventListener('keyup', (key) => {
   if (key.code == 'Space') {
@@ -47,25 +50,32 @@ window.addEventListener('resize', () => {
 });
 
 canvas.addEventListener('mousedown', (event) => {
-  switch (mode) {
-    case Mode.DRAW:
-      break;
-    case Mode.DRAG:
-      break;
-    default:
+  clickingCanvas = true;
+  prevX = 0;
+  prevY = 0;
+});
+
+window.addEventListener('mouseup', () => {
+  clickingCanvas = false;
+  prevX = 0;
+  prevY = 0;
+});
+
+let prevX = 0;
+let prevY = 0;
+window.addEventListener('mousemove', (event) => {
+  if (clickingCanvas) {
+    if (prevX > 0 || prevY > 0) {
+      displayer.moveX += event.pageX - prevX;
+      displayer.moveY += event.pageY - prevY;
+      displayer.display();
+    }
+    prevX = event.pageX;
+    prevY = event.pageY;
   }
 });
 
-window.addEventListener('mouseup', () => {});
-
-displayer.display();
-
-window.api.receive('receiveMatrix',
-    (/** @type {Array<Array>} */ matrix) => {
-      displayer.matrix = matrix.map((item) => {
-        return item.map((value) => {
-          return displayer.colors[value];
-        });
-      });
-      displayer.display();
-    });
+window.api.receive('receiveMatrix', (/** @type {Array<Array>} */ matrix) => {
+  displayer.matrix = matrix;
+  displayer.display();
+});
