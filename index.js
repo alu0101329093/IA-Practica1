@@ -39,14 +39,18 @@ app.whenReady().then(()=> {
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
   });
-  child = spawn('matrix_processor\\bin\\main.exe');
+  if (process.platform === 'win32') {
+    child = spawn('matrix_processor\\bin\\main.exe', [],
+        {detached: true, shell: true});
+  } else {
+    child = spawn('matrix_processor/bin/main');
+  }
   child.stdout.on('data', (msg) => {
     console.log(msg.toString());
   });
   child.on('close', () => {
-    setTimeout(()=> {
-      stop = true;
-    }, 2000);
+    stop = true;
+    mainWindow.close();
   });
 });
 
@@ -60,15 +64,17 @@ io.on('connection', (socket) => {
     socket.emit('stop');
   });
 
-  process.on('beforeExit', (event) => {
-    event.preventDefault();
-    socket.emit('stop');
-    while (!stop) continue;
+  mainWindow.on('close', (event)=> {
+    if (!stop) {
+      event.preventDefault();
+      socket.emit('stop');
+    }
   });
 });
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    // while (!stop) continue;
     app.quit();
   }
 });
