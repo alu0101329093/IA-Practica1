@@ -1,3 +1,5 @@
+const Objects = {OBSTACLE: 0, ROAD: 1, CAR: 2, GOAL: 3, PATH: 4};
+
 /**
  * Display a matrix
  */
@@ -17,7 +19,7 @@ class MatrixDisplay {
     this.tileHeight = tileHeight;
     /** @type {Array.<Array>} */
     this.matrix = Array.from(Array(width),
-        () => new Array(height).fill(0));
+        () => new Array(height).fill(Objects.ROAD));
     this.colors = ['#000000', '#ffffff', '#ff0000', '#adff2f', '#0000ff'];
     this.setStartingPoints();
     this.moveX = 0;
@@ -59,8 +61,40 @@ class MatrixDisplay {
       this.startingY = 0;
     }
   }
-}
 
-const Objects = {OBSTACLE: 0, ROAD: 1, CAR: 2, GOAL: 3, PATH: 4};
+  /**
+   * Generate a new matrix filled with a  percentage of the object
+   * @param {number} percentage
+   * @param {Objects} object
+   */
+  generateRandomMatrix(percentage, object) {
+    this.matrix = Array.from(Array(this.width),
+        () => new Array(this.height).fill(Objects.ROAD));
+    percentage = Math.max(0, Math.min(100, percentage));
+    const maxObstacleNumber = this.width * this.height * percentage / 100;
+    console.log(this.matrix);
+    console.log(this.width);
+    console.log(this.height);
+    let obstacleNumber = 0;
+    while (obstacleNumber < maxObstacleNumber) {
+      const x = Math.floor(Math.random() * this.width);
+      // console.log(x);
+      const y = Math.floor(Math.random() * this.height);
+      // console.log(y);
+      if (this.matrix[x][y] !== object) {
+        this.matrix[x][y] = object;
+        obstacleNumber++;
+      }
+    }
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  setSize(width, height) {
+    this.width = Number(width);
+    this.height = Number(height);
+    this.matrix = Array.from(Array(this.width),
+        () => new Array(this.height).fill(Objects.ROAD));
+  }
+}
 
 export {MatrixDisplay, Objects};

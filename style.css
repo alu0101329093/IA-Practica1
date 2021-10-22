@@ -71,6 +71,7 @@ body {
 h2 {
   margin-block: 0em;
   text-align: center;
+  font-size: 22px;
 }
 
 .menu-play-button {
@@ -118,3 +119,10 @@ h3 {
   align-items: center;
 }
 
+.obstacle-percentage {
+  width: 30px;
+}
+
+.world-size-input {
+  width: 40px;
+}
