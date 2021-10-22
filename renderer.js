@@ -6,6 +6,9 @@ const menuButtonCar = document.getElementById('menu-button-car');
 const menuButtonGoal = document.getElementById('menu-button-goal');
 const menuButtonPath = document.getElementById('menu-button-path');
 const menuPlayButton = document.getElementById('menu-play-button');
+document.getElementById('coords-input').addEventListener('click', () => {
+  console.log('meh');
+});
 
 menuButtonObstacle.getElementsByClassName('menu-button-color')[0].style.
     backgroundColor = 'black';
@@ -31,8 +34,20 @@ const displayer = new MatrixDisplay(canvas.getContext('2d'), 50, 50, 5, 5);
 const Mode = {NONE: 0, DRAW: 1, DRAG: 2};
 const mode = Mode.NONE;
 let clickingCanvas = false;
-const objectSelected = Objects.ROAD;
+let objectSelected = Objects.ROAD;
 
+menuButtonObstacle.addEventListener('click', () => {
+  objectSelected = Objects.OBSTACLE;
+});
+menuButtonRoad.addEventListener('click', () => {
+  objectSelected = Objects.ROAD;
+});
+menuButtonCar.addEventListener('click', () => {
+  objectSelected = Objects.CAR;
+});
+menuButtonGoal.addEventListener('click', () => {
+  objectSelected = Objects.GOAL;
+});
 
 document.addEventListener('keyup', (key) => {
   if (key.code == 'Space') {
