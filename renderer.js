@@ -18,10 +18,6 @@ menuButtonGoal.getElementsByClassName('menu-button-color')[0].style.
 menuButtonPath.getElementsByClassName('menu-button-color')[0].style.
     backgroundColor = 'blue';
 
-menuPlayButton.addEventListener('click', () => {
-  menuPlayButton.classList.toggle('pause');
-});
-
 /** @type {HTMLCanvasElement} */
 const canvas = document.getElementById('canvas');
 canvas.height = Math.floor(window.innerHeight/1.5);
@@ -49,8 +45,6 @@ menuButtonGoal.addEventListener('click', () => {
 
 document.addEventListener('keyup', (key) => {
   if (key.code == 'Space') {
-    // prueba.randomMatrix();
-    // prueba.display();
     window.api.send('stop');
   }
 });
@@ -113,7 +107,22 @@ document.getElementById('world-sizes-input').addEventListener('click', () => {
   const height = document.getElementById('world-height');
   displayer.setSize(width.value, height.value);
   displayer.setStartingPoints();
+  displayer.resetMove();
   displayer.display();
+});
+
+menuPlayButton.addEventListener('click', () => {
+  if (!menuPlayButton.classList.contains('pause')) {
+    menuPlayButton.classList.add('pause');
+    window.api.send('sendMatrix', displayer.matrix);
+  }
+});
+
+window.api.receive('receivePath', (path) => {
+  console.log(path);
+  setTimeout(() => {
+    menuPlayButton.classList.remove('pause');
+  }, 500);
 });
 
 // window.api.receive('receiveMatrix', (/** @type {Array<Array>} */ matrix) => {

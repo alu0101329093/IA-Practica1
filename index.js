@@ -55,12 +55,20 @@ app.whenReady().then(()=> {
 
 io.on('connection', (socket) => {
   console.log('user connected');
-  socket.on('receiveMatrix', (msg) => {
-    mainWindow.webContents.send('receiveMatrix', JSON.parse(msg)[0]);
+  // socket.on('receiveMatrix', (msg) => {
+  //   mainWindow.webContents.send('receiveMatrix', JSON.parse(msg)[0]);
+  // });
+
+  socket.on('receivePath', (msg) => {
+    mainWindow.webContents.send('receivePath', JSON.parse(msg)[0]);
   });
 
   ipcMain.on('stop', () => {
     socket.emit('stop');
+  });
+
+  ipcMain.on('sendMatrix', (_event, msg) => {
+    socket.emit('sendMatrix', JSON.stringify(msg));
   });
 
   mainWindow.on('close', (event)=> {

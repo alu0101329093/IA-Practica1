@@ -29,8 +29,9 @@ class MatrixDisplay {
   // eslint-disable-next-line require-jsdoc
   display() {
     this.clear();
-    for (let i = 0; i < this.width; i++) {
-      for (let j = 0; j < this.height; j++) {
+    const arrangedCoords = this.getArrangedCoords();
+    for (let i = arrangedCoords.start.x; i < arrangedCoords.end.x; i++) {
+      for (let j = arrangedCoords.start.y; j < arrangedCoords.end.y; j++) {
         this.context.fillStyle = this.colors[this.matrix[i][j]];
         this.context.fillRect(this.startingX + this.moveX + i * this.tileWidth,
             this.startingY + this.moveY + j * this.tileHeight, this.tileWidth,
@@ -72,15 +73,10 @@ class MatrixDisplay {
         () => new Array(this.height).fill(Objects.ROAD));
     percentage = Math.max(0, Math.min(100, percentage));
     const maxObstacleNumber = this.width * this.height * percentage / 100;
-    console.log(this.matrix);
-    console.log(this.width);
-    console.log(this.height);
     let obstacleNumber = 0;
     while (obstacleNumber < maxObstacleNumber) {
       const x = Math.floor(Math.random() * this.width);
-      // console.log(x);
       const y = Math.floor(Math.random() * this.height);
-      // console.log(y);
       if (this.matrix[x][y] !== object) {
         this.matrix[x][y] = object;
         obstacleNumber++;
@@ -94,6 +90,51 @@ class MatrixDisplay {
     this.height = Number(height);
     this.matrix = Array.from(Array(this.width),
         () => new Array(this.height).fill(Objects.ROAD));
+  }
+
+  /**
+   * Return the coords whithin the matrix from where it should start and end
+   * drawing
+   * @return {{start: {x: Number, y: Number}, end: {x: Number, y: Number}}}
+   */
+  getArrangedCoords() {
+    const matrixStartX = this.startingX + this.moveX;
+    const matrixStartY = this.startingY + this.moveY;
+    if (matrixStartX >= this.context.canvas.width ||
+      matrixStartY >= this.context.canvas.height) {
+      return {start: {x: 0, y: 0}, end: {x: 0, y: 0}};
+    }
+    const matrixEndX = matrixStartX + this.width * this.tileWidth;
+    const matrixEndY = matrixStartY + this.height * this.tileHeight;
+    if (matrixEndX <= 0 || matrixEndY <= 0) {
+      return {start: {x: 0, y: 0}, end: {x: 0, y: 0}};
+    }
+
+    const arrangedCoords =
+    {start: {x: 0, y: 0}, end: {x: this.width, y: this.height}};
+    if (matrixStartX < 0) {
+      arrangedCoords.start.x =
+      Math.floor(Math.abs(matrixStartX) / this.tileWidth);
+    }
+    if (matrixStartY < 0) {
+      arrangedCoords.start.y =
+      Math.floor(Math.abs(matrixStartY) / this.tileHeight);
+    }
+    if (matrixEndX > this.context.canvas.width) {
+      arrangedCoords.end.x = this.width -
+      Math.floor((matrixEndX - this.context.canvas.width) / this.tileWidth);
+    }
+    if (matrixEndY > this.context.canvas.height) {
+      arrangedCoords.end.y = this.height -
+      Math.floor((matrixEndY - this.context.canvas.height) / this.tileHeight);
+    }
+    return arrangedCoords;
+  }
+
+  // eslint-disable-next-line require-jsdoc
+  resetMove() {
+    this.moveX = 0;
+    this.moveY = 0;
   }
 }
 
