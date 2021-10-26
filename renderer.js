@@ -29,6 +29,8 @@ const Mode = {NONE: 0, DRAW: 1, DRAG: 2};
 const mode = Mode.DRAG;
 let clickingCanvas = false;
 let objectSelected = Objects.ROAD;
+let car = [];
+let goal = [];
 
 menuButtonObstacle.addEventListener('click', () => {
   objectSelected = Objects.OBSTACLE;
@@ -89,6 +91,24 @@ document.getElementById('coords-input').addEventListener('click', () => {
   /** @type {HTMLInputElement} */
   let yCoord = document.getElementById('y-coord');
   yCoord = Math.max(0, Math.min(displayer.height, yCoord.value));
+  if (displayer.matrix[xCoord][yCoord] == Objects.CAR) {
+    car = [];
+  }
+  if (displayer.matrix[xCoord][yCoord] == Objects.GOAL) {
+    goal = [];
+  }
+  if (objectSelected === Objects.CAR) {
+    if (car.length !== 0) {
+      displayer.matrix[car[0]][car[1]] = Objects.ROAD;
+    }
+    car = [xCoord, yCoord];
+  }
+  if (objectSelected === Objects.GOAL) {
+    if ( goal.length !== 0) {
+      displayer.matrix[goal[0]][goal[1]] = Objects.ROAD;
+    }
+    goal = [xCoord, yCoord];
+  }
   displayer.matrix[xCoord][yCoord] = objectSelected;
   displayer.display();
 });
@@ -113,13 +133,19 @@ document.getElementById('world-sizes-input').addEventListener('click', () => {
 
 menuPlayButton.addEventListener('click', () => {
   if (!menuPlayButton.classList.contains('pause')) {
-    menuPlayButton.classList.add('pause');
-    window.api.send('sendMatrix', displayer.matrix);
+    if (car.length > 0 && goal.length > 0) {
+      menuPlayButton.classList.add('pause');
+      window.api.send('sendMatrix', displayer.matrix);
+    }
   }
 });
 
-window.api.receive('receivePath', (path) => {
-  console.log(path);
+window.api.receive('receivePath', (/** @type {Array<Array<int>>} */path) => {
+  // console.log(path);
+  path.forEach((position) => {
+    displayer.matrix[position[0]][position[1]] = Objects.PATH;
+    displayer.display();
+  });
   setTimeout(() => {
     menuPlayButton.classList.remove('pause');
   }, 500);
