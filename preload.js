@@ -1,5 +1,4 @@
-const {contextBridge, ipcRenderer} = require('electron');
-
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('api', {
   send: (channel, data) => {
@@ -9,7 +8,7 @@ contextBridge.exposeInMainWorld('api', {
     }
   },
   receive: (channel, func) => {
-    const validChannels = ['receiveMatrix', 'receivePath'];
+    const validChannels = ['receivePath'];
     if (validChannels.includes(channel)) {
       ipcRenderer.on(channel, (event, ...args) => func(...args));
     }

@@ -14,7 +14,7 @@
   <canvas id="canvas" class="canvas"></canvas>
   <div class="menu">
     <div class="menu-colors">
-      <h2>Items</h2>
+      <h2>Objetos</h2>
       <div class="menu-colors-div">
         <div class="menu-color">
           <h3>Obstaculo</h3>
@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="menu-objects">
-      <h2>Add item</h2>
+      <h2>Añadir Objeto</h2>
       <div class="menu-add">
         <label for="x-coord">X: </label>
         <input type="text" name="x-coord" id="x-coord" value="0" class="coord-input">
@@ -59,12 +59,12 @@
         <input type="text" name="y-coord" id="y-coord" value="0" class="coord-input">
         <input type="submit" value="Add" id="coords-input">
       </div>
-      <h2>Generate Obstacle(%)</h2>
+      <h2>Generar Obstaculos(%)</h2>
       <div class="menu-generate">
         <input type="text" name="obstacle-percentage" id="obstacle-percentage" class="obstacle-percentage">
         <input type="submit" value="Generate" id="percentage-input">
       </div>
-      <h2>World Size</h2>
+      <h2>Tamaño del mundo</h2>
       <div class="menu-world-size">
         <label for="world-width">Width: </label>
         <input type="text" name="world-width" id="world-width" value="100" class="world-size-input">
@@ -72,16 +72,37 @@
         <input type="text" name="world-height" id="world-height" value="100" class="world-size-input">
         <input type="submit" value="Change" id="world-sizes-input">
       </div>
-      <h2>Generate From File</h2>
+      <h2>Generar desde archivo</h2>
       <div class="menu-generate">
         <input type="text" name="file-input" id="file-input" class="file-input">
         <input type="submit" value="Generate" id="file-input">
       </div>
     </div>
     <div class="menu-settings">
-      <h2>Settings</h2>
-      <div class="menu-play-button-border">
+      <h2>Opciones</h2>
+      <div class="menu-button-border">
         <div class="menu-play-button" id="menu-play-button"></div>
+      </div>
+      <h3>Direcciones</h3>
+      <form>
+        <select id="ways-selection">
+          <option value="4ways">4 direcciones</option>
+          <option value="8ways">8 direcciones</option>
+        </select>
+      </form>
+      <h3>Funcion Heurística</h3>
+      <select id="heuristic-selection">
+        <option value="rectilinear">Rectilínea</option>
+        <option value="euclidean">Euclide</option>
+      </select>
+      <h2>Zoom</h2>
+      <div class="menu-zoom-div">
+        <div class="menu-button-border">
+          <div class="menu-zoomin-button" id="menu-zoomin-button"></div>
+        </div>
+        <div class="menu-button-border">
+          <div class="menu-zoomout-button" id="menu-zoomout-button"></div>
+        </div>
       </div>
     </div>
   </div>

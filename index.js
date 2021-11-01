@@ -1,10 +1,10 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 // eslint-disable-next-line no-unused-vars
-const {Server} = require('socket.io');
+const { Server } = require('socket.io');
 /** @type{Server} */
 const io = require('socket.io')(3000);
-const {spawn} = require('child_process');
+const { spawn } = require('child_process');
 
 /** @type {BrowserWindow} */
 let mainWindow;
@@ -17,7 +17,7 @@ let child;
 function createWindow() {
   const window = new BrowserWindow({
     width: 1280,
-    height: 720,
+    height: 800,
     show: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -34,7 +34,7 @@ function createWindow() {
 
 let stop = false;
 
-app.whenReady().then(()=> {
+app.whenReady().then(() => {
   mainWindow = createWindow();
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) mainWindow = createWindow();
@@ -71,7 +71,7 @@ io.on('connection', (socket) => {
     socket.emit('sendMatrix', JSON.stringify(msg));
   });
 
-  mainWindow.on('close', (event)=> {
+  mainWindow.on('close', (event) => {
     if (!stop) {
       event.preventDefault();
       socket.emit('stop');

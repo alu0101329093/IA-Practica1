@@ -63,6 +63,10 @@ body {
 }
 
 .menu-settings {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: column;
   margin: 5px;
   border: 2px solid black;
   padding: 5px;
@@ -95,12 +99,38 @@ h2 {
   border-color: transparent transparent transparent #404040;
 }
 
-.menu-play-button-border {
+.menu-button-border {
   padding: 2px;
   width: 25px;
   height: 25px;
   border: 3px solid black;
   border-radius: 8px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.menu-zoomin-button {
+  width: 25px;
+  height: 25px;
+  background: url(public/zoomin.svg);
+  cursor: pointer;
+}
+
+.menu-zoomout-button {
+  width: 25px;
+  height: 25px;
+  background: url(public/zoomout.svg);
+  cursor: pointer;
+}
+
+.menu-zoomin-button:hover,
+.menu-zoomout-button:hover {
+  filter: opacity(70%);
+}
+
+.menu-zoom-div {
+  display: flex;
+  flex-flow: row;
 }
 
 h3 {
