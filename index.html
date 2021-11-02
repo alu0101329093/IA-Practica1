@@ -49,6 +49,18 @@
           </button>
         </div>
       </div>
+      <div class="menu-results">
+        <h3>Nodos expandidos:</h3>
+        <textarea class="menu-results-text" id="menu-nodes-text" cols="8" rows="1" disabled=true></textarea>
+      </div>
+      <div class="menu-results">
+        <h3>Tiempo resultado:</h3>
+        <textarea class="menu-results-text" id="menu-time-text" cols="8" rows="1" disabled=true></textarea>
+      </div>
+      <div class="menu-results">
+        <h3>Logitud camino:</h3>
+        <textarea class="menu-results-text" id="menu-length-text" cols="8" rows="1" disabled=true></textarea>
+      </div>
     </div>
     <div class="menu-objects">
       <h2>Añadir Objeto</h2>
@@ -62,21 +74,21 @@
       <h2>Generar Obstaculos(%)</h2>
       <div class="menu-generate">
         <input type="text" name="obstacle-percentage" id="obstacle-percentage" class="obstacle-percentage">
-        <input type="submit" value="Generate" id="percentage-input">
+        <input type="submit" value="Generar" id="percentage-input">
       </div>
       <h2>Tamaño del mundo</h2>
       <div class="menu-world-size">
-        <label for="world-width">Width: </label>
+        <label for="world-width">Ancho: </label>
         <input type="text" name="world-width" id="world-width" value="100" class="world-size-input">
-        <label for="world-height">Height: </label>
+        <label for="world-height">Alto: </label>
         <input type="text" name="world-height" id="world-height" value="100" class="world-size-input">
-        <input type="submit" value="Change" id="world-sizes-input">
+        <input type="submit" value="Cambiar" id="world-sizes-input">
       </div>
-      <h2>Generar desde archivo</h2>
+      <!-- <h2>Generar desde archivo</h2>
       <div class="menu-generate">
         <input type="text" name="file-input" id="file-input" class="file-input">
-        <input type="submit" value="Generate" id="file-input">
-      </div>
+        <input type="submit" value="Generar" id="file-input">
+      </div> -->
     </div>
     <div class="menu-settings">
       <h2>Opciones</h2>
@@ -93,7 +105,7 @@
       <h3>Funcion Heurística</h3>
       <select id="heuristic-selection">
         <option value="rectilinear">Rectilínea</option>
-        <option value="euclidean">Euclide</option>
+        <option value="euclidean">Euclidea</option>
       </select>
       <h2>Zoom</h2>
       <div class="menu-zoom-div">

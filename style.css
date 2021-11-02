@@ -145,8 +145,12 @@ h3 {
 
 .menu-objects {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
+  flex-direction: column;
+  margin: 5px;
+  border: 2px solid black;
+  padding: 5px;
 }
 
 .obstacle-percentage {
@@ -155,4 +159,14 @@ h3 {
 
 .world-size-input {
   width: 40px;
+}
+
+.menu-results {
+  display: flex;
+  flex-flow: row;
+  margin: 2px;
+}
+
+.menu-results-text {
+  resize: none;
 }

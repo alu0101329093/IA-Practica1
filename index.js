@@ -60,7 +60,7 @@ io.on('connection', (socket) => {
   // });
 
   socket.on('receivePath', (msg) => {
-    mainWindow.webContents.send('receivePath', JSON.parse(msg)[0]);
+    mainWindow.webContents.send('receivePath', JSON.parse(msg));
   });
 
   ipcMain.on('stop', () => {

@@ -12,6 +12,12 @@ const menuZoomOutButton = document.getElementById('menu-zoomout-button');
 const waysSelection = document.getElementById('ways-selection');
 /** @type {HTMLSelectElement} */
 const heuristicSelection = document.getElementById('heuristic-selection');
+/** @type {HTMLTextAreaElement} */
+const menuNodesNumberText = document.getElementById('menu-nodes-text');
+/** @type {HTMLTextAreaElement} */
+const menuTimeText = document.getElementById('menu-time-text');
+/** @type {HTMLTextAreaElement} */
+const menuLengthText = document.getElementById('menu-length-text');
 
 menuButtonObstacle.getElementsByClassName(
   'menu-button-color',
@@ -34,7 +40,7 @@ const canvas = document.getElementById('canvas');
 canvas.height = Math.floor(window.innerHeight / 1.5);
 canvas.width = Math.floor(window.innerWidth / 1.3);
 
-const displayer = new MatrixDisplay(canvas.getContext('2d'), 50, 50, 3, 3);
+const displayer = new MatrixDisplay(canvas.getContext('2d'), 100, 100, 3, 3);
 displayer.display();
 const Mode = { NONE: 0, DRAW: 1, DRAG: 2 };
 const mode = Mode.DRAG;
@@ -102,10 +108,11 @@ window.addEventListener('mousemove', (event) => {
 document.getElementById('coords-input').addEventListener('click', () => {
   /** @type {HTMLInputElement} */
   let xCoord = document.getElementById('x-coord');
-  xCoord = Math.max(0, Math.min(displayer.width, xCoord.value));
+  xCoord = Math.max(0, Math.min(displayer.width - 1, xCoord.value));
   /** @type {HTMLInputElement} */
   let yCoord = document.getElementById('y-coord');
-  yCoord = Math.max(0, Math.min(displayer.height, yCoord.value));
+  yCoord = Math.max(0, Math.min(displayer.height - 1, yCoord.value));
+  console.log(yCoord);
   if (displayer.matrix[xCoord][yCoord] == Objects.CAR) {
     car = [];
   }
@@ -143,6 +150,16 @@ document.getElementById('world-sizes-input').addEventListener('click', () => {
   /** @type {HTMLInputElement} */
   const height = document.getElementById('world-height');
   displayer.setSize(width.value, height.value);
+  if (car.length > 0) {
+    car[0] = Math.min(car[0], width.value - 1);
+    car[1] = Math.min(car[1], height.value - 1);
+    displayer.matrix[car[0]][car[1]] = Objects.CAR;
+  }
+  if (goal.length > 0) {
+    goal[0] = Math.min(goal[0], width.value - 1);
+    goal[1] = Math.min(goal[1], height.value - 1);
+    displayer.matrix[goal[0]][goal[1]] = Objects.GOAL;
+  }
   displayer.setStartingPoints();
   displayer.resetMove();
   displayer.display();
@@ -196,7 +213,13 @@ heuristicSelection.addEventListener('change', () => {
     heuristicFunction = HeuristicFunctions.Euclidean;
 });
 
-window.api.receive('receivePath', (/** @type {Array<Array<int>>} */ path) => {
+window.api.receive('receivePath', (message) => {
+  console.log(message);
+  menuNodesNumberText.value = message['nodes'];
+  menuTimeText.value = message['time'] / 1000 + ' s';
+  /** @type {number[][]} */
+  let path = message['path'];
+  menuLengthText.value = path.length;
   displayer.display();
   let index = 0;
   let interval = setInterval(() => {
